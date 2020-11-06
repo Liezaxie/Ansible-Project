@@ -1,6 +1,0 @@
----
-- name: Maak VM
-  hosts: win-volibear.DOEKOE.LOCAL
-  tasks:
-    - name: VM
-      win_command: New-VM -Name Win10VMAnsible -MemoryStartupBytes 4GB -BootDevice VHD -NewVHDPath .\VMs\Win10TestAnsible.vhdx -Path .\VMData -NewVHDSizeBytes 20GB -Generation 1 -Switch Intern-1
