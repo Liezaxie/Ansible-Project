@@ -50,7 +50,7 @@
   - name: FILEBEAT - Configure Logstash output elastic host
     lineinfile:
       path: /etc/filebeat/filebeat.yml
-      regexp: '^hosts: ["localhost:9200"]'
+      regexp: ' hosts: ["localhost:9200"]'
       line: '#hosts: ["localhost:9200"]'
       backrefs: yes 
       
