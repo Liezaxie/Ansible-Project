@@ -19,7 +19,7 @@
     
 
   - name: APT - Add elastic.co repository
-    apt_repository: repo="deb https://artifacts.elastic.co/packages/5.x/apt stable main" filename="elastic-5.x" update_cache=yes
+    apt_repository: repo="deb https://artifacts.elastic.co/packages/7.x/apt stable main" filename="elastic-7.x" update_cache=yes
     when: ansible_distribution == "Ubuntu"
     
   
@@ -45,6 +45,7 @@
       regexp: '^output.elascticsearch:'
       line: '#output.elascticsearch:'
       state: present
+      backrefs: yes
       
   
   
