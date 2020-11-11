@@ -21,8 +21,8 @@
 
   - name: FILEBEAT - Install Filebeat
     apt: pkg=filebeat
-    #when: ansible_distribution == "Ubuntu"
-	
+    when: ansible_distribution == "Ubuntu"
+    
   - name: FILEBEAT - Copy base filebeat config file
     copy: src=/srv/ansible/setup-files/filebeat/filebeat.yml dest=/etc/filebeat/filebeat.yml
 	
