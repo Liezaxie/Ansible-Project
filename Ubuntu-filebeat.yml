@@ -12,7 +12,7 @@
   - name: Upgrade all apt packages
     apt: upgrade=dist force_apt_get=yes
     
-      
+  
   - name: APT - Add elastic.co key
     apt_key: url="https://artifacts.elastic.co/GPG-KEY-elasticsearch"
     when: ansible_distribution == "Ubuntu"
@@ -22,7 +22,15 @@
     apt_repository: repo="deb https://artifacts.elastic.co/packages/5.x/apt stable main" filename="elastic-5.x" update_cache=yes
     when: ansible_distribution == "Ubuntu"
     
-
+  
+  - name: Update apt-get repo and cache
+    apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+    
+  
+  - name: Upgrade all apt packages
+    apt: upgrade=dist force_apt_get=yes
+    
+  
   - name: FILEBEAT - Install Filebeat
     apt: pkg=filebeat
     when: ansible_distribution == "Ubuntu"
