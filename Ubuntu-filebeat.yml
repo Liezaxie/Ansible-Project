@@ -36,14 +36,14 @@
     when: ansible_distribution == "Ubuntu"
     
  
-  #- name: FILEBEAT - Copy base filebeat config file
+  #- name: FILEBEAT - Copy base filebeat config  file
   #  copy: src=/srv/ansible/setup-files/filebeat/filebeat.yml dest=/etc/filebeat/filebeat.yml
     
 
   - name: FILEBEAT - Configure Logstash output
     blockinfile:
       dest: /etc/filebeat/filebeat.yml
-      insertafter: '# Logstash output'
+      insertbefore: '#output.logstash'
       marker: "# {mark} -- Logstash output configured by Ansible"
       block: |
         output.logstash:
