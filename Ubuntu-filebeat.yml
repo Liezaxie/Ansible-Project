@@ -2,8 +2,6 @@
 - name: ANSIBLE - Filebeat installation and configuration 
   hosts: test-ansible
   
-  sudo: yes
-  
 
   tasks:
   - name: Update apt-get repo and cache
