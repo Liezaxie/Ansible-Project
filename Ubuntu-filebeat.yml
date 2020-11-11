@@ -39,8 +39,15 @@
   #- name: FILEBEAT - Copy base filebeat config  file
   #  copy: src=/srv/ansible/setup-files/filebeat/filebeat.yml dest=/etc/filebeat/filebeat.yml
     
-
-  - name: FILEBEAT - Configure Logstash output
+  - name: FILEBEAT - Configure Logstash output part 1
+    lineinfile:
+      path: /etc/filebeat/filebeat.yml
+      regexp:'^output.elascticsearch:'
+      line:'^#'
+      
+  
+  
+  - name: FILEBEAT - Configure Logstash output part 2
     blockinfile:
       dest: /etc/filebeat/filebeat.yml
       insertbefore: '#output.logstash:'
