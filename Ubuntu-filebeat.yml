@@ -39,7 +39,7 @@
   #- name: FILEBEAT - Copy base filebeat config  file
   #  copy: src=/srv/ansible/setup-files/filebeat/filebeat.yml dest=/etc/filebeat/filebeat.yml
     
-  - name: FILEBEAT - Configure Logstash output part 1
+  - name: FILEBEAT - Configure Logstash output elastic
     lineinfile:
       path: /etc/filebeat/filebeat.yml
       regexp: 'output.elasticsearch:'
@@ -47,8 +47,15 @@
       backrefs: yes
       
   
+  - name: FILEBEAT - Configure Logstash output elastic host
+    lineinfile:
+      path: /etc/filebeat/filebeat.yml
+      regexp: 'hosts: ["localhost:9200"]'
+      line: '#hosts: ["localhost:9200"]'
+      backrefs: yes 
+      
   
-  - name: FILEBEAT - Configure Logstash output part 2
+  - name: FILEBEAT - Configure Logstash output logstash
     blockinfile:
       dest: /etc/filebeat/filebeat.yml
       insertbefore: '#output.logstash:'
