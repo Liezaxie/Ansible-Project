@@ -42,7 +42,7 @@
   - name: FILEBEAT - Configure Logstash output part 1
     lineinfile:
       path: /etc/filebeat/filebeat.yml
-      regexp: '^output.elascticsearch:'
+      regexp: 'output.elascticsearch:'
       line: '#output.elascticsearch:'
       state: present
       backrefs: yes
