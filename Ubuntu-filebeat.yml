@@ -43,7 +43,7 @@
   - name: FILEBEAT - Configure Logstash output
     blockinfile:
       dest: /etc/filebeat/filebeat.yml
-      insertbefore: '#output.logstash'
+      insertbefore: '#output.logstash:'
       marker: "# {mark} -- Logstash output configured by Ansible"
       block: |
         output.logstash:
