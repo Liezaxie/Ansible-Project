@@ -1,6 +1,6 @@
 ---
 - name: ANSIBLE - Filebeat installation and configuration 
-  hosts: '{{ target }}'
+  hosts: test-ansible
   
   sudo: yes
 
