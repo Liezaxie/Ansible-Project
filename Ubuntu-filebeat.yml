@@ -43,5 +43,5 @@
           hosts: ["39.0.0.27:5044"]
           
 
-   - name: FILEBEAT - Restart filebeat
-     service: name=filebeat state=restarted
+  - name: FILEBEAT - Restart filebeat
+    service: name=filebeat state=restarted
