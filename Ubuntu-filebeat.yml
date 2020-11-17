@@ -1,6 +1,6 @@
 ---
 - name: ANSIBLE - Filebeat installation and configuration 
-  hosts: ALL
+  hosts: all
   become: yes
   
 
