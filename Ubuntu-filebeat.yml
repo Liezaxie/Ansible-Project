@@ -1,6 +1,6 @@
 ---
 - name: ANSIBLE - Filebeat installation and configuration 
-  hosts: test-ansible
+  hosts: ALL
   become: yes
   
 
