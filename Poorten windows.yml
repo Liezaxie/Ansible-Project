@@ -1,5 +1,4 @@
 ---
-- name: poorten open windows
   hosts: win-RDPantheon.DOEKOE.LOCAL
   
   
