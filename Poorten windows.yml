@@ -2,6 +2,7 @@
 - name: poorten open windows
   hosts: win-RDPantheon.DOEKOE.LOCAL
   
+  
   tasks: poort 39
   - name: Firewall rule to allow SMTP on TCP port 25
     community.windows.win_firewall_rule:
