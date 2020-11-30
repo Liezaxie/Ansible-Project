@@ -8,7 +8,7 @@
     win_firewall_rule:
       name: SMTP
       localport: 39
-      action: allow
+      action: block
       direction: in
       protocol: tcp
       state: present
