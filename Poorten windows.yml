@@ -5,7 +5,7 @@
   
   tasks: 
   - name: Firewall rule to allow SMTP on TCP port 25
-    windows.win_firewall_rule:
+    win_firewall_rule:
       name: SMTP
       localport: 39
       action: allow
