@@ -6,8 +6,8 @@
   
   tasks:
     - name: TCP 80 open
-	  ufw:
-        rule: allow
-        port: 80
-        proto: tcp
+      ufw:
+       rule: allow
+       port: 80
+       proto: tcp
     
