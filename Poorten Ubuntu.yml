@@ -1,0 +1,13 @@
+---
+- name: Ufw Ubuntu open port
+  hosts: all
+  become: yes
+  
+  
+  tasks:
+    - name: TCP 80 open
+	  ufw:
+        rule: allow
+        port: 80
+        proto: tcp
+    
