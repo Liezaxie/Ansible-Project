@@ -4,12 +4,15 @@
   
   
   tasks:
-  - name: Install all security, critical, and rollup updates without a scheduled task
+  - name: Install all critical and security updates
     win_updates:
       category_names:
-        - SecurityUpdates
-        - CriticalUpdates
-        - UpdateRollups
-        - log_path: G:\ansible_Updates.txt
-        - state: installed
-        - reboot: yes
+      - CriticalUpdates
+      - SecurityUpdates
+      - UpdateRollups
+      state: installed
+    register: update_result
+ 
+          - name: reboot host if required
+            win_reboot:
+            when: update_result.reboot_required
