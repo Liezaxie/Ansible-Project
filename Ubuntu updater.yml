@@ -1,5 +1,5 @@
 ---
-- name:Ubuntu updater
+- name: Ubuntu updater
   hosts: all
   become: yes
   
