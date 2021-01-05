@@ -10,6 +10,6 @@
         - SecurityUpdates
         - CriticalUpdates
         - UpdateRollups
-        log_path: G:\ansible_Updates.txt
-        state: installed
-        reboot: yes
+        - log_path: G:\ansible_Updates.txt
+        - state: installed
+        - reboot: yes
