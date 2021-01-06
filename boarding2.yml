@@ -35,7 +35,7 @@
 
         $SecurePassword = $password | ConvertTo-SecureString -AsPlainText -Force
 
-        New-ADUser -Name $employee.username -GivenName $employee.voornaam -Surname $employee.achternaam -SamAccountName $employee.username -Path "CN=Gebruikers,DC=Doekoe,DC=local" -City $employee.stad -AccountPassword $SecurePassword -Enabled $True
+        New-ADUser -Name $employee.username -GivenName $employee.voornaam -Surname $employee.achternaam -SamAccountName $employee.username -Path "OU=Gebruikers,DC=Doekoe,DC=local" -City $employee.stad -AccountPassword $SecurePassword -Enabled $True
         Invoke-Sqlcmd -Query "UPDATE Board.dbo.Mensen SET creation = 0 WHERE ID = $($employee.ID) " -ServerInstance "WIN-SKARNER"  -OutputSqlErrors $True
         Invoke-Sqlcmd -Query "INSERT INTO Board.dbo.Wachtwoord (ID,Username,achtwoord) VALUES ($($employee.ID), '$($employee.username)', '$($password)');" -ServerInstance "WIN-SKARNER"  -OutputSqlErrors $True
         }
