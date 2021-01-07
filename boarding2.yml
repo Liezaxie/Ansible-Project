@@ -35,7 +35,12 @@
 
         $SecurePassword = $password | ConvertTo-SecureString -AsPlainText -Force
 
-        New-ADUser -Name $employee.username -GivenName $employee.voornaam -Surname $employee.achternaam -SamAccountName $employee.username -Path "OU=Gebruikers,DC=Doekoe,DC=local" -City $employee.stad -AccountPassword $SecurePassword -HomeDrive Z -HomeDirectory \\WIN-SERAPHINE\Home\$employee.username -Enabled $True
+        New-ADUser -Name $employee.username -GivenName $employee.voornaam -Surname $employee.achternaam -SamAccountName $employee.username -Path "OU=Gebruikers,DC=Doekoe,DC=local" -City $employee.stad -AccountPassword $SecurePassword -Enabled $True
+        $sac = $employee.username
+        $folder = New-Item \\WIN-SERAPHINE\Home\$sac -Type Directory
+        $AclOb = New-Object
+        System.Security.AccessControl.FileSystemAccessRule("domain\$sac", 'FullAccess', 'ContainerInherit,ObjectInherit', 'None', 'Allow')
+        Set-Acl -Path $folder.FullName -AclObject $AclOb
         Invoke-Sqlcmd -Query "UPDATE Board.dbo.Mensen SET creation = 0 WHERE ID = $($employee.ID) " -ServerInstance "WIN-SKARNER" -Username "SQL" -Password "Doekoe2020!!"  -OutputSqlErrors $True
         Invoke-Sqlcmd -Query "INSERT INTO Board.dbo.Wachtwoord (ID,wachtwoord) VALUES ($($employee.ID), '$($password)');" -ServerInstance "WIN-SKARNER" -Username "SQL" -Password "Doekoe2020!!"  -OutputSqlErrors $True
         Add-ADGroupMember -Identity $employee.groep -Members $employee.username
