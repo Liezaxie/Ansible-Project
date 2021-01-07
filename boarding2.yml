@@ -35,21 +35,22 @@
 
         $SecurePassword = $password | ConvertTo-SecureString -AsPlainText -Force
 
-        New-ADUser -Name $employee.username -GivenName $employee.voornaam -Surname $employee.achternaam -SamAccountName $employee.username -Path "OU=Gebruikers,DC=Doekoe,DC=local" -City $employee.stad -AccountPassword $SecurePassword -Enabled $True
+        New-ADUser -Name $employee.username -GivenName $employee.voornaam -Surname $employee.achternaam -SamAccountName $employee.username -Path "OU=Gebruikers,DC=Doekoe,DC=local" -City $employee.stad -AccountPassword $SecurePassword -HomeDirectory \\WIN-SERAPHINE\Home\%username% -Enabled $True
         Invoke-Sqlcmd -Query "UPDATE Board.dbo.Mensen SET creation = 0 WHERE ID = $($employee.ID) " -ServerInstance "WIN-SKARNER" -Username "SQL" -Password "Doekoe2020!!"  -OutputSqlErrors $True
         Invoke-Sqlcmd -Query "INSERT INTO Board.dbo.Wachtwoord (ID,wachtwoord) VALUES ($($employee.ID), '$($password)');" -ServerInstance "WIN-SKARNER" -Username "SQL" -Password "Doekoe2020!!"  -OutputSqlErrors $True
         Add-ADGroupMember -Identity $employee.groep -Members $employee.username
         }
+    
+    - name: Delete Disabled users
+      win_shell: |
+        Get-ADUser -Filter * -SearchBase "OU=Gebruikers,DC=Doekoe,DC=local"  | Where-Object {$_.Enabled -eq $false} | Remove-Aduser -confirm:$False 
+    
     - name: Disable Users 
       win_shell: |
         $data = Invoke-Sqlcmd -Query "SELECT * FROM [Board].[dbo].[Mensen] WHERE State = 0" -ServerInstance "WIN-SKARNER" -Username "SQL" -Password "Doekoe2020!!"        
         foreach($employee in $data)
         {
         Write-output "Deze statemennt was False en ik ga nu " + $employee.username  + " opblazen"
-        Disable-ADAccount -Identity $employee.username  
+        Disable-ADAccount -Identity $employee.username
+        Invoke-Sqlcmd -Query "UPDATE Board.dbo.Mensen SET state = 1 WHERE ID = $($employee.ID) " -ServerInstance "WIN-SKARNER" -Username "SQL" -Password "Doekoe2020!!"  -OutputSqlErrors $True  
         }
-    #- name: Delete Disabled users
-    #  win_shell: |
-    #    $users = Get-ADUser -Filter * | where {($_.enabled -eq $false)}
-    #    Write-Output "We are deleting $users now after 90 days"
-    #    Write-Output "pIEP POOP BAB IK BEN ROBOT" 
