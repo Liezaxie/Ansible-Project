@@ -42,7 +42,7 @@
         #System.Security.AccessControl.FileSystemAccessRule("domain\$sac", 'FullAccess', 'ContainerInherit,ObjectInherit', 'None', 'Allow')
         #Set-Acl -Path $folder.FullName -AclObject $AclOb
         $user = $employee.voornaam
-        $homeShare = New-Item -path "\\WIN-SERAPHINE\Home\$user" -ItemType Directory -Force
+        $homeShare = New-Item -path "\\WIN-SERAPHINE\Home\$SamAccountName" -ItemType Directory -Force
         $acl = get-acl $homeShare
         $FileSystemRights = [System.Security.AccessControl.FileSystemRights]"Fullcontrol"
         $AccessControlType = [System.Security.AccessControl.AccessControlType]::Allow
