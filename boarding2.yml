@@ -36,11 +36,22 @@
         $SecurePassword = $password | ConvertTo-SecureString -AsPlainText -Force
 
         New-ADUser -Name $employee.username -GivenName $employee.voornaam -Surname $employee.achternaam -SamAccountName $employee.username -Path "OU=Gebruikers,DC=Doekoe,DC=local" -City $employee.stad -AccountPassword $SecurePassword -Enabled $True
-        $sac = $employee.username
-        $folder = New-Item \\WIN-SERAPHINE\Home\$sac -Type Directory
-        $AclOb = New-Object
-        System.Security.AccessControl.FileSystemAccessRule("domain\$sac", 'FullAccess', 'ContainerInherit,ObjectInherit', 'None', 'Allow')
-        Set-Acl -Path $folder.FullName -AclObject $AclOb
+        #$sac = $employee.username
+        #$folder = New-Item \\WIN-SERAPHINE\Home\$sac -Type Directory
+        #$AclOb = New-Object
+        #System.Security.AccessControl.FileSystemAccessRule("domain\$sac", 'FullAccess', 'ContainerInherit,ObjectInherit', 'None', 'Allow')
+        #Set-Acl -Path $folder.FullName -AclObject $AclOb
+        $user = $employee.voornaam
+        $homeShare = New-Item -path "\\WIN-SERAPHINE\Home\$user" -ItemType Directory -Force
+        $acl = get-acl $homeShare
+        $FileSystemRights = [System.Security.AccessControl.FileSystemRights]"Fullcontrol"
+        $AccessControlType = [System.Security.AccessControl.AccessControlType]::Allow
+        $InheritanceFlags = [System.Security.AccessControl.InheritanceFlags]"ContainerInherit, ObjectInherit"
+        $PropagationFlags = [System.Security.AccessControl.PropagationFlags]"InheritOnly"
+ 
+        $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule ($User.SID, $FileSystemRights, $InheritanceFlags, $PropagationFlags, $AccessControlType)
+        $acl.AddAccessRule($AccessRule)
+        Set-Acl -Path $homeShare -AclObject $acl -ea Stop
         Invoke-Sqlcmd -Query "UPDATE Board.dbo.Mensen SET creation = 0 WHERE ID = $($employee.ID) " -ServerInstance "WIN-SKARNER" -Username "SQL" -Password "Doekoe2020!!"  -OutputSqlErrors $True
         Invoke-Sqlcmd -Query "INSERT INTO Board.dbo.Wachtwoord (ID,wachtwoord) VALUES ($($employee.ID), '$($password)');" -ServerInstance "WIN-SKARNER" -Username "SQL" -Password "Doekoe2020!!"  -OutputSqlErrors $True
         Add-ADGroupMember -Identity $employee.groep -Members $employee.username
