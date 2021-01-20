@@ -1,6 +1,6 @@
 ---
 
-- name: Network Getting Started First Playbook
+- name: Testing Vyos connection
   connection: network_cli
   hosts: all
   tasks:
