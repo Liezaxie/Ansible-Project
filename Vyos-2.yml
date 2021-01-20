@@ -5,11 +5,8 @@
   hosts: all
   tasks:
 
-    - name: configuring Vyos interfaces through Ansible
-      vyos.vyos.vyos_interfaces:
-         config:
-         - name: eth1
-           description: eth1 Configured by Ansible Module
-           speed: auto
-           duplex: auto
-           enabled: yes
+    - name: configure console logging
+      vyos.vyos.vyos_logging:
+         dest: console
+         facility: all
+         level: crit
