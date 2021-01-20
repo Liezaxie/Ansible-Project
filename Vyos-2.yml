@@ -1,15 +1,15 @@
 ---
 
-- name: Testing Vyos connection
+- name: Interface Vyos
   connection: network_cli
   hosts: all
   tasks:
 
-    - name: configure the pre-login banner
-      vyos.vyos.vyos_banner:
-        banner: pre-login
-        text: |
-          Hallo allemaal
-          Zijn we nog wakker?
-          Tjerk?
-        state: present
+    - name: configuring Vyos interfaces through Ansible
+    vyos.vyos.vyos_interfaces:
+      config:
+      - name: eth2
+        description: eth2 Configured by Ansible Module
+        speed: auto
+        duplex: auto
+        enabled: yes
