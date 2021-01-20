@@ -8,8 +8,8 @@
     - name: configuring Vyos interfaces through Ansible
       vyos.vyos.vyos_interfaces:
          config:
-         - name: eth2
-           description: eth2 Configured by Ansible Module
+         - name: eth1
+           description: eth1 Configured by Ansible Module
            speed: auto
            duplex: auto
            enabled: yes
