@@ -1,0 +1,15 @@
+---
+
+- name: Testing Vyos connection
+  connection: network_cli
+  hosts: all
+  tasks:
+
+    - name: configure the pre-login banner
+      vyos.vyos.vyos_banner:
+        banner: pre-login
+        text: |
+          Hallo allemaal
+          Zijn we nog wakker?
+          Tjerk?
+        state: present
